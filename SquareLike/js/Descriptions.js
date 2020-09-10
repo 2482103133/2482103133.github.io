@@ -1,0 +1,10 @@
+Descriptions={}
+Descriptions["Dynamite"] = "<b class='title'>炸弹</b><br/>可以根据吨量炸掉黑色方块<br/>功能键:快速下落到底部"
+Descriptions["Medecine"] = "<b class='title'>修复块</b><br/>生成一个3X3方块<br/>功能键:快速下落到底部"
+Descriptions["Entity"] = "<b class='title'>普通方块</b><br/>到最低点将被固定成黑色块<br/>功能键:快速下落到底部"
+Descriptions["Jet"] = "<b class='title'>轰炸机</b><br/>碰到障碍物将爆炸,效果等同于炸弹<br/>功能键:投放一个1x1的小炸弹"
+Descriptions["Laser"] = "<b class='title'>召唤块</b><br/>轰炸召唤召唤一排1x1小方块"
+Descriptions["Snake"] = "<b class='title'>蛇蛇</b>:<br/>吃掉所有食物化身金龙(yu)"
+Descriptions["Turret"] = "<b class='title'>炮塔Turret</b>:<br/>有点蠢的自动机器人"
+Descriptions["Tank"] = "<b class='title'>小坦克</b>:<br/>迎接炮弹的洗礼吧"
+Descriptions["Shooter"] = "<b class='title'>射手Shooter</b>:<br/>快准稳"

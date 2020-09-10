@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bootstrap 实例</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="lib/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/Scripts.js"></script>
+    <script src="js/Buffer.js"></script>
+    <script src="js/Timer.js"></script>
+    <script src="js/IntervalLocker.js"></script>
+    <script src="js/Effect.js"></script>
+    <script src="js/ImageLoader.js"></script>
+    <script src="js/Type.js"></script>
+    <script src="js/Block.js"></script>
+    <script src="js/AudioPlayer.js"></script>
+    <script src="js/EffectPlayer.js"></script>
+    <script src="js/Map.js"></script>
+    <script src="js/Entity.js"></script>
+    <script src="js/Dynamite.js"></script>
+    <script src="js/Snake.js"></script>
+    <script src="js/laser.js"></script>
+    <script src="js/Jet.js"></script>
+    <script src="js/Medecine.js"></script>
+    <script src="js/HitBrick.js"></script>
+    <script src="js/Builder.js"></script>
+    <script src="js/Flower.js"></script>
+    <script src="js/Turret.js"></script>
+    <script src="js/Tank.js"></script>
+    <script src="js/Bullet.js"></script>
+    <script src="js/PointerEntity.js"></script>
+    <script src="js/Shapes.js"></script>
+    <script src="js/Descriptions.js"></script>
+    <script src="js/ResourceLoader.js"></script>
+
+</head>
+
+<body>
+
+    <div id="shell">
+        <div class="container">
+            <!-- <div class="container" id="container1"> -->
+            <canvas class="game_panel" id="panel1">
+            </canvas>
+            <canvas class="game_panel" id="panel2">
+            </canvas>
+            <canvas class="game_panel" id="panel3">
+            </canvas>
+
+            <span id="start_panel" ]>
+                <div class="game_title">Square Like</div>
+                <div class="shake" id="start">
+                    开始游戏
+                </div>
+            </span>
+            <div id="tip" style="position: absolute;top: 0;left: 0;">提示</div>
+            <div id="game_info">
+                <span class="part header">
+                </span>
+                <span class="part">
+                </span>
+            </div>
+        </div>
+
+
+        <div class="game_pad" id="left"></div>
+        <div class="game_pad" id="right"></div>
+        <div class="game_pad" id="up"></div>
+        <div class="game_pad" id="down"></div>
+        <div class="game_pad" id="hit"></div>
+
+        <div id="nav-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div id="info_panel" ">
+            
+            <p style=" vertical-align: top;">
+            <h3><b>游戏操作:</b></br></h3>
+            ↑/W:方块变形</br>
+            ↓/S:加速下降</br>
+            ←→/AD:方块左右移动</br>
+            空格:功能键</br>
+            <h3><b>方块类别:</b></br></h3>
+            <p id="class">
+                <b id="Dynamite"></b>
+                <b id="Medecine"></b>
+                <b id="Object"></b>
+                <b id="Jet"></b>
+                <b id="Laser"></b>
+                <b id="Snake"></b>
+            </p>
+
+            </p>
+            <span style="display:inline-block;">
+                <p>
+                    <h3><b>设定:<br /></b></h3>
+                    取消教程:<input id="inform" type="checkbox"></input><br />
+                    取消坠落:<input id="fall" type="checkbox"></input><br />
+                    有无网格:<input id="web" type="checkbox"></input><br />
+                    暂停下落:<input id="pause" type="checkbox"></input><br />
+                    音乐:<input type="range" id="volume" name="cowbell" min="0" max="100" value="50" step="1"><br>
+                    音效:<input type="range" id="effect" name="cowbell" min="0" max="100" value="50" step="1">
+            </span>
+            <span style="display:inline-block;vertical-align: top;">
+                <h3><b>功能:<br /></b></h3>
+                设计模式<input id="design" type="checkbox"> </input><br />
+                <button id="export"> 导出形状</button><br />
+                <button id="import"> 导入形状</button><br />
+                <textarea id="import_file" placeholder="在这里输入形状,支持01二维表" cols="40" rows="20" type="text"
+                    style="display: none;"></textarea>
+            </span>
+
+            </p>
+            <br />
+
+
+            <b>小提示:</b>集齐一行有惊喜哦~~
+
+        </div>
+        <!-- <div id="game_pad_hit" style="display:inline-block" "> -->
+
+    </div>
+    </div>
+    <img class=" preloaded" id="sakura" src="image/sakura.png">
+    <!-- <canvas id="canvas1" width="400" height="400" style="background-color:lightgray;"></canvas> -->
+
+</body>
+
+
+</html>
+<script>
+    //背景音乐播放器
+    var BackGroundPlayer = new $.Player(true, ["background.mp3"], "audio")
+    var game = new $.GameMap($("#game_panel"));
+    // duration,px, py,xs,ys
+
+    //自动调整宽度
+    Resize()
+    window.addEventListener("resize", Resize);
+
+    $('input[type=range]').on('input', function () {
+        $(this).trigger('change');
+    });
+    $("#volume").change(function () {
+        BackGroundPlayer.SetVolume($(this).val() / 100)
+    })
+    $("#effect").change(function () {
+        $.GlobalEffectPlayer.SetVolume($(this).val() / 100)
+    })
+
+    $("#info_panel").hide()
+    $("#start").click(function () {
+        full($("html").get(0))
+        ToggleInfo()
+        BackGroundPlayer.Play()
+        $("#start").hide()
+        // $("#start_panel>.game_title").text("To my love Miss.Ruirui Tang")
+        $("#start_panel>.game_title").text("Game Start!")
+        $("#start_panel").fadeOut(8000);
+        game.Play();
+    })
+
+    function ToggleInfo() {
+        $("#info_panel").toggle()
+        $('#nav-icon').toggleClass('open');
+    }
+    ToggleInfo()
+
+    $('#nav-icon').click(function () {
+        ToggleInfo()
+    });
+
+    $("#import").click(function () {
+        var file = $("#import_file")
+        if ($("#import_file").css("display") == "none") {
+            file.css("display", "block")
+        } else {
+            file.css("display", "none")
+            try {
+                // Shape_List.clear()
+
+                var arr = JSON.parse(file.val())
+                if (arr.length > 0) {
+                    try {
+                        var get = arr[0][0]
+                    } catch (err) {
+                        arr = [arr]
+                    }
+                } else {
+                    throw "错误的格式"
+                }
+
+                Shape_List.push(arr)
+
+            } catch {
+                // .Bonus("$2"$3)
+                game.ShowMessage("<b class='title'>错误的格式</b>")
+                return
+            }
+
+            game.ShowMessage("导入成功,将有一定几率出现")
+
+        }
+    })
+
+    $("#export").click(function () {
+        var new_map = []
+        for (const row of game.map) {
+            var new_row = []
+            for (const b of row) {
+                new_row.push(b)
+            }
+            new_map.push(new_row)
+        }
+
+        new_map = StraitenShape(new_map)
+
+        var str = JSON.stringify(toIntArray(new_map)).replace(/\],/g, "],\n").replace(/\]\]/g, "]\n]")
+
+        download("形状.txt", str)
+
+
+
+        function toIntArray(map) {
+            var int_arr = []
+            for (const row of map) {
+                var new_row = []
+                for (const b of row) {
+                    new_row.push(b.Type)
+                }
+                int_arr.push(new_row)
+            }
+            return int_arr
+        }
+    })
+
+    function BindingKeyToElement(id, key) {
+        var interval = 30
+        var key = key
+        var func = function () {
+            jQuery.event.trigger({
+                type: 'keydown',
+                keyCode: key
+            });
+            console.log("trigger")
+        }
+
+        var timer = new $.Timer(function () {
+            func()
+        }, interval)
+
+        var args = {
+            cancel: false,
+            time_out: null
+        }
+
+        function start() {
+            if (args.time_out != null) {
+                return
+            }
+            // cancel()
+            func()
+            //300毫秒后没有keyup则开始
+            args.time_out = setTimeout(() => {
+                console.log("args.cancel:" + args.cancel)
+                if (!args.cancel) {
+                    console.log("start")
+                    timer.Start()
+                } else {
+
+                }
+                args.cancel = false
+
+            }, 300);
+            args.cancel = false
+        }
+
+        function cancel() {
+            clearTimeout(args.time_out)
+            args.time_out = null
+            timer.Stop()
+            console.log("stop")
+            args.cancel = true
+        }
+
+        $("#" + id).get(0).addEventListener("touchstart", start)
+        $("#" + id).get(0).addEventListener("touchend", cancel)
+        $("#" + id).get(0).addEventListener("touchcancel", cancel)
+        $("#" + id).get(0).addEventListener("touchleave", cancel)
+        $("#" + id).mouseup(cancel)
+        $("#" + id).mouseleave(cancel)
+        $("#" + id).mouseout(cancel)
+    }
+
+    BindingKeyToElement("left", Keys.Left)
+    BindingKeyToElement("right", Keys.Right)
+    BindingKeyToElement("up", Keys.Up)
+    BindingKeyToElement("down", Keys.Down)
+    BindingKeyToElement("hit", Keys.Space)
+
+    $(".game_pad").mousedown(function () {
+        return false
+    })
+
+    if (!IsMobilePhone()) {
+        $(".game_pad").hide()
+    } else {
+        alert("手机端横屏游戏体验更好哦!\n如果不能横屏请右上角在浏览器中打开")
+    }
+</script>
