@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>疫情地图展示</title>
+  <style>
+    #myEcharts {
+      width: 800px;
+      height: 500px;
+      border: solid 1px lightgray;
+      margin: 0 auto;
+    }
+  </style>
+
+  <!-- 引入 echarts.js -->
+  <script src="https://echarts.apache.org/examples/vendors/echarts/echarts.min.js?_v_=1578305236132"></script>
+  <!--引入中国的地图数据js文件，引入后会自动注册地图名字和数据-->
+  <script src="https://echarts.apache.org/examples/vendors/echarts/map/js/china.js?_v_=1578305236132"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.csv.min.js"></script>
+
+</head>
+
+<body>
+  <!--为echarts准备一个dom容器-->
+  <div id="myEcharts"></div>
+  <div id="date"></div>
+  <button id="replay" style="
+  padding: 0;
+  border: 0;
+  margin: 0 auto;
+">🔄重新播放</div>
+    <script>
+      // _echarts_instance_
+      //初始化echarts实例
+      var myChart = echarts.init(document.getElementById('myEcharts'));
+      // 指定图表的配置项和数据
+      option = {
+        title: {
+          text: '中国疫情图',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['中国疫情图']
+        },
+        visualMap: {
+          type: 'continuous',
+          min:0,
+          max:100000,
+          text:["100000","0"],
+          inRange: {
+            color: ['#000000', 'rgba(3,4,5,0.4)', 'red'],
+            symbolSize: [30, 100]
+        },
+          pieces: [{
+              min: 10000,
+              max: 1000000,
+              label: '大于等于10000人',
+              color: '#372a28'
+            },
+            {
+              min: 500,
+              max: 9999,
+              label: '确诊500-9999人',
+              color: '#4e160f'
+            },
+            {
+              min: 100,
+              max: 499,
+              label: '确诊100-499人',
+              color: '#974236'
+            },
+            {
+              min: 10,
+              max: 99,
+              label: '确诊10-99人',
+              color: '#ee7263'
+            },
+            {
+              min: 1,
+              max: 9,
+              label: '确诊1-9人',
+              color: '#f5bba7'
+            },
+          ],
+          color: ['#E0022B', '#E09107', '#A3E00B']
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: {
+              show: true
+            },
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        roamController: {
+          show: true,
+          left: 'right',
+          mapTypeControl: {
+
+            'china': true
+          }
+        },
+        series: [{
+          name: '确诊数',
+          type: 'map',
+          mapType: 'china',
+          roam: false,
+          label: {
+            show: true,
+            color: 'rgb(249, 249, 249)'
+          }
+        }]
+      };
+      //color文件数据
+      g_color = null
+      //疫情文件数据
+      g_csv = null
+      //疫情数据data形式缓存
+      g_params = []
+      //当前播放的疫情状态指针
+      cur = 0
+      //帧数之间间隔
+      tpf = 200
+      //to-do色彩之间transition的次数
+      tra_times = 10
+
+      //加载数据和色彩文件并计算出Echars Map的data
+      function do_preload() {
+        colors = [...new Set(g_color.split(/\s+/))]
+
+        option.visualMap.inRange.color = colors
+        // len = colors.length
+        // piece = Math.ceil(10000 / len)
+        // pieces = []
+        
+        // for (let i = 0; i < len; i++) {
+        //   color = colors[i]
+        //   pieces.push({
+        //     min: i * piece + 1,
+        //     max: (i + 1) * piece,
+        //     label: '人数' + i * piece + '~' + (i + 1) * piece + '人',
+        //     color: color
+        //   })
+        // }
+        
+        // pieces.push({
+        //   min: 10000,
+        //   max: 1000000,
+        //   label: '大于等于10000人',
+        //   color: '#000000'
+        // })
+        // option.visualMap.pieces = pieces
+
+       
+
+
+        //  document.write(csv)
+        // document.write(csv.substr(0, 100))
+        let data = $.csv.toObjects(g_csv)
+        let sorted_data = {}
+
+        for (const element of data) {
+          let date = new Date(element.updateTime)
+          let str = date.toISOString()
+          let key = date.toISOString().substr(0, str.indexOf('T'))
+          if (element.countryName == '中国' && (element.cityName != '' || element.provinceName == '台湾')) {
+            if (sorted_data[key] === undefined) {
+              sorted_data[key] = {}
+            }
+            var province_key = element.provinceName
+            if (sorted_data[key][province_key] === undefined) {
+              sorted_data[key][province_key] = {}
+            }
+            if (sorted_data[key][province_key][element.cityName] === undefined || Date.parse(sorted_data[key][
+                province_key
+              ][element.cityName].updateTime) < Date.parse(element.updateTime)) {
+              sorted_data[key][province_key][element.cityName] = element
+            }
+            // sorted_data[key][province_key]["cases_count"]+=(parseInt(element.city_confirmedCount)-parseInt(element.city_curedCount)-parseInt(element.city_deadCount))
+            // sorted_data[key][province_key]["cities"].push(element)
+          }
+        }
+
+        time = 0
+        for (const key of Object.keys(sorted_data).sort()) {
+          var temp_data = []
+
+          for (const province in sorted_data[key]) {
+            if (sorted_data[key].hasOwnProperty(province)) {
+              const element = sorted_data[key][province];
+              let edited = province;
+              edited = edited.replace("省", '')
+              edited = edited.replace("市", '')
+              cases_count = 0
+              for (const cityName in sorted_data[key][province]) {
+                if (sorted_data[key][province].hasOwnProperty(cityName)) {
+                  const city = sorted_data[key][province][cityName];
+                  if (city.provinceName == '台湾')
+                    cases_count += (parseInt(city.province_confirmedCount) - parseInt(city.province_curedCount) -
+                      parseInt(city.province_deadCount))
+                  else
+                    cases_count += (parseInt(city.city_confirmedCount) - parseInt(city.city_curedCount) - parseInt(city
+                      .city_deadCount))
+
+
+                }
+              }
+
+              temp_data.push({
+                name: edited,
+                value: cases_count
+              });
+
+            }
+          }
+          let opt = Object.assign({}, option)
+          opt.title={
+          text: '中国疫情图\n'+key,
+          left: 'center'
+        }
+          
+          opt.series = [{
+            name: '确诊数',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            label: {
+              show: true,
+              color: 'rgb(249, 249, 249)'
+            },
+            data: temp_data
+          }]
+
+          g_params.push({
+            date: key,
+            opt: opt
+          })
+
+        }
+
+
+      }
+      
+      //从当前位置开始播放timelapse
+      function do_timelapse() {
+        param = g_params[cur]
+        if (param === undefined)
+          return
+        cur++
+
+        // $("#myEcharts").empty()
+        // $("#myEcharts").attr("_echarts_instance_", null)
+      
+        myChart.setOption(param.opt);
+        // myChart.update();
+        
+        $("#date").text(param.date)
+
+        setTimeout(() => {
+          do_timelapse()
+        }, tpf)
+      }
+      //从头播放timelapse
+      function do_render() {
+        cur = 0
+        do_timelapse()
+      }
+
+      function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+      }
+
+      $(document).ready(function () {
+        //重放
+        $("#replay").click(function () {
+          do_render()
+        })
+        //缓存色彩数据
+        $.get("color_path/test", function (color) {
+          g_color = color
+        })
+        //缓存中国地区疫情数据
+        $.get("data/DXYArea_China.csv", function (csv) {
+          g_csv = csv
+          do_preload()
+          do_render()
+        })
+      });
+
+    </script>
+</body>
+
+</html>
