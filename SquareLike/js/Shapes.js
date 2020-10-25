@@ -5,8 +5,6 @@ EntityList = [
     ,
     $.Shooter,
 
-    $.Tank
-    ,
     $.Turret
     ,
     $.Snake
