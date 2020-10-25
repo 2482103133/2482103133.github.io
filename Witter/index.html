@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css\bootstrap.min.css">
+  <!-- <link href="css/font-awesome.min.css" rel="stylesheet"> -->
+  <link href="css\all.css" rel="stylesheet">
+  <script src="js\jquery-3.2.1.slim.min.js"></script>
+  <script src="js\popper.min.js"></script>
+  <script src="js\bootstrap.min.js"></script>
+  <title>Witter</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .pill {
+      border-radius: 25px;
+
+    }
+
+    .list-special .list-group-item:first-child {
+      border-top-right-radius: 25px !important;
+      border-top-left-radius: 25px !important;
+    }
+
+    .list-special .list-group-item:last-child {
+      border-bottom-right-radius: 25px !important;
+      border-bottom-left-radius: 25px !important;
+    }
+
+    .info-card {}
+
+    .small-avatar {
+      width: 13px;
+      height: 13px;
+      display: inline-block;
+    }
+    .middle-avatar {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+    }
+    .info-pic {
+      width: 69px;
+      height: 69px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .right-section {
+      width: 349px;
+    }
+
+    .info-content {
+      width: 239px;
+    }
+
+    .info-title {
+      max-width: 142px;
+    }
+
+    .list-group-item {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .icon {
+      width: 27px;
+      /* color:lightblue; */
+      border: none;
+      margin-right: 20px;
+      font-size: 27px;
+      /* text-align: center; */
+      float: left;
+
+    }
+
+
+    .btn-light {
+      color: #212529;
+      background-color: white;
+      border-color: white
+    }
+
+    .btn-light:hover {
+      color: #3cb4ff
+    }
+
+    .group .btn {
+      margin-bottom: 20px;
+      text-align: left;
+      border: 0;
+    }
+
+
+    .btn-primary {
+      color: #fff;
+
+    }
+
+    .group{
+      width: 255px;
+    }
+
+    .left-section {
+      min-width: 68.9px;
+    }
+
+    /* Breakpoint XS */
+    @media (max-width: 1013px) {
+
+      .hidden-xs-down,
+      .hidden-sm-down,
+      .hidden-md-down,
+      .hidden-lg-down,
+      .hidden-xl-down,
+      .hidden-xs-up,
+      .hidden-unless-sm,
+      .hidden-unless-md,
+      .hidden-unless-lg,
+      .hidden-unless-xl {
+        display: none !important;
+      }
+
+      .icon {
+        margin-right: 0px;
+        float: None;
+      }
+
+      .group .btn {
+        text-align: center;
+      
+      }
+      .group{
+        width: auto;
+      }
+    }
+
+
+    .section-border,
+    .middle-section,
+    .section-border-bottom,
+    .section-border-x {
+      border-color: rgb(230, 227, 227);
+      border-width: 1px 1px 1px 1px;
+      border-style: solid;
+    }
+
+    .middle-section {
+      padding: 0;
+    }
+
+    .section-border-bottom {
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .section-border-x {
+      border-top: 0;
+      border-bottom: 0;
+    }
+    .operation .btn{
+      font-size: 22.5px;
+      flex: 1;
+      text-align: center;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </style>
+</head>
+
+<body class=" h-100">
+  <div class="container-fluid h-100">
+    <div class="row h-100 flex-nowrap">
+
+      <!-- left section -->
+
+      <div class="h-100 col-lg-3 col-md-2 col-sm-2 col-2 px-0  left-section ">
+        <ul class=" btn-group-vertical  group mr-xs-0 mr-1 sticky-top" style="float: right; ">
+
+          <button type="button" class="btn btn-light   rounded">
+            <img class="icon" src="img/Twitter_Logo_Blue.png" style="width: 27px;height:27px; color:rgba(29,161,242,1.00)"></img><b></b>
+          </button>
+
+          <button type="button" class="  btn btn-light  rounded">
+            <div class="fa-fw fal fa-home icon"></div><b class="hidden-xs-down">Home</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-search icon"></div><b class="hidden-xs-down">Search</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-bell icon"></div><b class="hidden-xs-down">Notification</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-bookmark icon"></div><b class="hidden-xs-down">Bookmark</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-desktop icon"></div><b class="hidden-xs-down">Desktop</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-user icon"></div><b class="hidden-xs-down">Profile</b>
+          </button>
+          <button type="button" class="  btn btn-light   rounded">
+            <div class="fa-fw fal fa-ellipsis-h-alt icon"></div><b class="hidden-xs-down">More</b>
+          </button>
+          <button type="button" class=" text-center btn btn-primary rounded">
+            <b>Tweet</b>
+          </button>
+        </ul>
+      </div>
+
+
+      <!-- middle section -->
+      <div class="h-100 col-lg-6 col-md-6 col-sm-10 col-10  middle-section section-border-x ">
+        <!-- header -->
+        <div class="section-border-bottom py-2 px-2 align-middle sticky-top bg-white">
+          <H5 class="  d-inline-block">Home</h5>
+          <div class=" fal fa-stars float-right btn btn-light text-primary rounded"></div>
+        </div>
+
+        <!--tweet form -->
+        <div class=" section-border-bottom d-flex">
+          <img class="d-inline-block m-3 rounded-circle" style="width:49px; height:49px"
+            src="https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_bigger.jpg"></img>
+          <div class="" style="flex-grow: 100">
+            <div class="form-group mt-3 border-bottom mb-0">
+              <textarea class="form-control form-control-plaintext px-0" name="" id="" rows="3"
+                placeholder="What's happening?"></textarea>
+              <div><span class="fa fa-globe text-primary mr-2"></span><span
+                  class="text-primary small b font-weight-bold">Who can reply</span></span></div>
+            </div>
+            <div>
+              <div class=" btn-group d-inline-block align-middle">
+                <div class="btn btn-light text-left fal text-primary fa-image"></div>
+                <div class="btn btn-light text-left fal text-primary fa-gift"></div>
+                <div class="btn btn-light text-left fal text-primary fa-chart-bar"></div>
+                <div class="btn btn-light text-left fal text-primary fa-smile"></div>
+                <div class="btn btn-light text-left fal text-primary fa-calendar-alt"></div>
+              </div>
+              <div class="btn btn-primary float-right d-inline-block ">Tweet</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- divider -->
+        <div class=" bg-light py-1"></div>
+
+        <!-- card -->
+          <div class=" section-border-bottom d-flex p-2" >
+            <img class="d-inline-block m-3 rounded-circle" style="width:49px; height:49px"
+              src="https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_bigger.jpg"></img>
+            <div class="pl-2" style="flex-grow: 100">
+              <div class="form-group mt-3 mb-0 ">
+                <span class="font-weight-bold .text-truncate">Donald J. Trump</span>
+                <span class="fa fa-shield-check text-primary"></span>
+                <span class="text-muted">@realDonaldTrump · 41m</span>
+                <button class=" float-right fa fa-ellipsis-h-alt btn btn-light text-primary"></button>
+              </div>
+              <div>So True!</div>
+              <div class="border rounded p-1" >
+                <div class="form-group m-2 mb-0 ">
+                  <img class="d-inline-block rounded-circle middle-avatar" 
+              src="https://pbs.twimg.com/profile_images/1080559825946374144/n1tU4WLx_bigger.jpg"></img>
+                  <span class="font-weight-bold .text-truncate">Rep. Matt Gaetz</span>
+                  <span class="fa fa-shield-check text-primary"></span>
+                  <span class="text-muted">@RepMattGaetz</span>
+                </div>
+              <div>"We have a warrior, and he's a good guy, but he loves to fight, and he loves this state, and he loves fighting for Florida, and he loves fighting for our country. 
+
+                And his name is Representative Matt Gaetz." -President <button class="btn btn-link b-0 p-0">@realDonaldTrump</button></div>
+
+                <!-- video -->
+                <div class="border rounded p-1" >
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aA2QuELfuUM" allowfullscreen></iframe>
+                    <div class=" font-weight-bold">President Trump Praises Rep. Matt Gaetz in Pensacola, FL </div>
+                    <div >"What a good guy he is!" </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <span class="text-muted">9:10 AM · Oct 24, 2020·Twitter Media Studio</span>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <span class="text-muted"><b>2.7K</b> Retweets <b> 191</b> Quote Tweets <b> 14.5K </b> Likes
+                </span>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <div class=" btn-group d-inline-block align-middle d-flex operation ">
+                  <div class="btn btn-light  fal text-info fa-comment"></div>
+                  <div class="btn btn-light  fal text-info fa-retweet"></div>
+                  <div class="btn btn-light  fal text-info fa-share"></div>
+                  <div class="btn btn-light  fal text-info fa-thumbs-up"></div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+          <div class=" section-border-bottom d-flex p-2" >
+            <img class="d-inline-block m-3 rounded-circle" style="width:49px; height:49px"
+              src="https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_bigger.jpg"></img>
+            <div class="pl-2" style="flex-grow: 100">
+              <div class="form-group mt-3 mb-0 ">
+                <span class="font-weight-bold .text-truncate">Donald J. Trump</span>
+                <span class="fa fa-shield-check text-primary"></span>
+                <span class="text-muted">@realDonaldTrump · 41m</span>
+                <button class=" float-right fa fa-ellipsis-h-alt btn btn-light text-primary"></button>
+              </div>
+              <div>So True!</div>
+              <div class="border rounded p-1" >
+                <div class="form-group m-2 mb-0 ">
+                  <img class="d-inline-block rounded-circle middle-avatar" 
+              src="https://pbs.twimg.com/profile_images/1080559825946374144/n1tU4WLx_bigger.jpg"></img>
+                  <span class="font-weight-bold .text-truncate">Rep. Matt Gaetz</span>
+                  <span class="fa fa-shield-check text-primary"></span>
+                  <span class="text-muted">@RepMattGaetz</span>
+                </div>
+              <div>"We have a warrior, and he's a good guy, but he loves to fight, and he loves this state, and he loves fighting for Florida, and he loves fighting for our country. 
+
+                And his name is Representative Matt Gaetz." -President <button class="btn btn-link b-0 p-0">@realDonaldTrump</button></div>
+
+                <!-- video -->
+                <div class="border rounded p-1" >
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aA2QuELfuUM" allowfullscreen></iframe>
+                    <div class=" font-weight-bold">President Trump Praises Rep. Matt Gaetz in Pensacola, FL </div>
+                    <div >"What a good guy he is!" </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <span class="text-muted">9:10 AM · Oct 24, 2020·Twitter Media Studio</span>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <span class="text-muted"><b>2.7K</b> Retweets <b> 191</b> Quote Tweets <b> 14.5K </b> Likes
+                </span>
+              </div>
+
+              <div class="form-group m-2 mb-0 ">
+                <div class=" btn-group d-inline-block align-middle d-flex operation ">
+                  <div class="btn btn-light  fal text-info fa-comment"></div>
+                  <div class="btn btn-light  fal text-info fa-retweet"></div>
+                  <div class="btn btn-light  fal text-info fa-share"></div>
+                  <div class="btn btn-light  fal text-info fa-thumbs-up"></div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+  
+
+
+
+      </div>
+
+      <!-- left section -->
+      <div class="h-100 col-lg-3 col-md-4 d-none d-sm-block d-xs-block  bg-transparent border-right-0">
+        <div class="w">
+          <form class=" form-inline sticky-top right-section mb-3 bg-white pb-2">
+            <div class=" input-group w-100">
+              <span class="input-group-prepend">
+                <div class="pill input-group-text bg-light "><i class="fa fa-search"></i></div>
+              </span>
+              <input class="pill form-control py-2 m-0 bg-light border-left-0 " type="search" id="example-search-input"
+                placeholder="search witter">
+            </div>
+
+          </form>
+
+
+          <div class=" list-special list-group right-section pill overflow-hidden bg-light">
+            <h5 class="list-group-item rounded-top-25 bg-light">What's happening?</h5>
+            <a href="#" class="list-group-item list-group-item-action bg-light">
+              <div class="d-inline-block info-content">
+                <div class=" d-block ">
+                  <img class="small-avatar rounded-circle "
+                    src="https://pbs.twimg.com/profile_images/991778099397320705/6LWXR6MS_normal.jpg">
+                  <span class="d-inline-block font-weight-normal text-truncate info-title align-text-top">Bloomberg
+                    Opinion
+                  </span>
+                  <span class=" text-muted align-text-top">·</span>
+                  <span class=" text-muted align-text-top">Yesterday</span>
+                </div>
+                <span class="font-weight-bold .text-truncate">Women are being forced to give up their careers
+                </span>
+              </div>
+              <img class="info-pic rounded" src="https://pbs.twimg.com/media/ElBz489XgAArRCZ?format=jpg&name=120x120" />
+            </a>
+
+
+            <a href="#" class="list-group-item list-group-item-action bg-light">
+              <div class="d-inline-block info-content">
+                <div class=" d-block ">
+                  <img class="small-avatar rounded-circle "
+                    src="https://pbs.twimg.com/profile_images/1098244578472280064/gjkVMelR_normal.png">
+                  <span class="d-inline-block font-weight-normal text-truncate info-title align-text-top">The New York
+                    Times
+                  </span>
+                  <span class=" text-muted align-text-top">·</span>
+                  <span class=" text-muted align-text-top">Yesterday</span>
+                </div>
+                <span class="font-weight-bold .text-truncate">Fact-Checking the #Debates2020
+                </span>
+              </div>
+              <img class="info-pic rounded"
+                src="https://pbs.twimg.com/semantic_core_img/1304441681899479041/gwkbEFvL?format=png&name=240x240" />
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">
+              <div class="d-inline-block info-content">
+                <div class=" d-block ">
+                  <img class="small-avatar rounded-circle "
+                    src="https://pbs.twimg.com/profile_images/1171581672074043393/XNqsW9EE_normal.jpg">
+                  <span class="d-inline-block font-weight-normal text-truncate info-title align-text-top">Los Angeles
+                    Times
+                  </span>
+                  <span class=" text-muted align-text-top">·</span>
+                  <span class=" text-muted align-text-top">Yesterday</span>
+                </div>
+                <span class="font-weight-bold .text-truncate">Questions remain about Fox News host who has been off air
+                  for 2 weeks
+                </span>
+              </div>
+              <img class="info-pic rounded" src="https://pbs.twimg.com/media/ElBhyRNVMAAKiUM?format=jpg&name=240x240" />
+            </a>
+            <a href="#" class="list-group-item list-group-item-action bg-light text-primary">Show More</a>
+          </div>
+          <div class=" text-center right-section">
+            <a class=" text-muted" href="#">Terms of Service</a> <a class=" text-muted" href="#">Pravicy Policy</a> <a
+              class=" text-muted" href="#">Cookie Policy</a><br>
+            <a class=" text-muted" href="#">Ads Info</a> <a class=" text-muted" href="#">More...</a> <span
+              class="d-inline-block text-muted" href="#">© 2020 Twitter, Inc.</span>
+            <div>
+            </div>
+            <!-- 
+        <img src="https://lh3.googleusercontent.com/ogw/ADGmqu_XKT_9hoYx18nRf9h4KL30JbcCJaQjaiHRZg4P=s32-c-mo"  alt="..." class="border rounded-circle"> -->
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+</body>
+
+</html>
